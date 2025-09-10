@@ -96,8 +96,6 @@ jobs:
           PRODUCT_IP="${{ inputs.product_api_ip }}"
           ORDER_IP="${{ inputs.order_api_ip  }}"
         fi
-        echo "PRODUCT_IP=$PRODUCT_IP"
-        echo "ORDER_IP=$ORDER_IP"
         echo "PRODUCT_IP=$PRODUCT_IP" >> $$GITHUB_ENV
         echo "ORDER_IP=$ORDER_IP" >> $$GITHUB_ENV
 
@@ -106,6 +104,8 @@ jobs:
       run: |
         echo "Injecting IPs into frontend/static/js/main.js"
         # Ensure frontend/main.js is directly in the path for sed
+        echo ${{ env.PRODUCT_IP }}
+        echo ${{ env.ORDER_IP }}
         sed -i "s|_PRODUCT_API_URL_|${{ env.PRODUCT_IP }}|g" frontend/main.js
         sed -i "s|_ORDER_API_URL_|${{ env.ORDER_IP }}|g" frontend/main.js
         
