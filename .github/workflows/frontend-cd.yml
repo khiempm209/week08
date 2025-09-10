@@ -21,6 +21,12 @@ on:
       aks_resource_group:
         required: true
         type: string
+  workflow_run:
+    workflows: ["Frontend CI - Build & Push Image"]
+    types:
+      - completed
+    branches:
+      - main
 
 jobs:
   deploy_frontend:
@@ -54,10 +60,10 @@ jobs:
       #     echo "---------------------------------"
 
       # Build and Push Docker image for Frontend
-      - name: Build and Push Frontend Image
-        run: |
-          docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/frontend:latest ./frontend/
-          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/frontend:latest
+      # - name: Build and Push Frontend Image
+      #   run: |
+      #     docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/frontend:latest ./frontend/
+      #     docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/frontend:latest
 
       - name: Set Kubernetes context (get AKS credentials)
         uses: azure/aks-set-context@v3
