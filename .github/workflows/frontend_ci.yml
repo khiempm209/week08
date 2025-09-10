@@ -92,12 +92,14 @@ jobs:
           set -o allexport
           source download/id_address_vars.env
           set +o allexport
+          PRODUCT_IP = "http://$PRODUCT_IP:8000"
+          ORDER_IP = "http://$ORDER_IP:8001"
         else
           PRODUCT_IP="${{ inputs.product_api_ip }}"
           ORDER_IP="${{ inputs.order_api_ip  }}"
         fi
-        echo "PRODUCT_IP=$PRODUCT_IP" >> $$GITHUB_ENV
-        echo "ORDER_IP=$ORDER_IP" >> $$GITHUB_ENV
+        echo "PRODUCT_IP=$PRODUCT_IP" >> $GITHUB_ENV
+        echo "ORDER_IP=$ORDER_IP" >> $GITHUB_ENV
 
 
     - name: Inject Backend IPs into Frontend main.js
